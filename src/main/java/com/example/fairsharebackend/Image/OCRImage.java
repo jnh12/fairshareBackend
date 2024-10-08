@@ -1,8 +1,16 @@
 package com.example.fairsharebackend.Image;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Document(collection = "ocrImages")
 public class OCRImage {
 
@@ -10,19 +18,5 @@ public class OCRImage {
     private String id;
     private byte[] imageData;
 
-    public String getId() {
-        return id;
-    }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public byte[] getImageData() {
-        return imageData;
-    }
-
-    public void setImageData(byte[] imageData) {
-        this.imageData = imageData;
-    }
 }
