@@ -11,7 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Document(collection = "ocrResults")
+@Document(collection = "ocrResult")
 public class OCRResult {
 
     @Id

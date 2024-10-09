@@ -29,19 +29,14 @@ public class OCRResultController {
         return ocrResultService.getOCRResult(id);
     }
 
-    @GetMapping("/parseText/{id}")
-    public String parseOCRResultWithChatGPT(@PathVariable String id) throws Exception {
-        Optional<OCRResult> ocrResult = ocrResultService.getOCRResult(id);
+    @PostMapping("/parseText")
+    public String parseOCRText(@RequestBody String resultText) throws Exception {
+        // Call the ChatGPT service directly with the OCR text
+        String response = GPTService.getChatGPTResponse(resultText);
 
-        if (ocrResult.isPresent()) {
-            String resultText = ocrResult.get().getResultText();
-            String response = GPTService.getChatGPTResponse(resultText);
+        // You can optionally save the response if needed
+        gptService.saveChatGPTResponse(response);
 
-            gptService.saveChatGPTResponse(response);
-            return response;
-
-        } else {
-            return "Text not found for id: " + id;
-        }
+        return response;
     }
 }

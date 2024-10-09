@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-@Document(collection = "transactions")
+@Document(collection = "parsedText")
 public class GPTResponse {
     @Id
     private String id; // Use String for MongoDB ObjectId or auto-generated string
