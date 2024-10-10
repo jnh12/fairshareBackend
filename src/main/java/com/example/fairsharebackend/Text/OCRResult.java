@@ -16,6 +16,7 @@ public class OCRResult {
 
     @Id
     private String id;
+    private String deviceUUID;
     private String resultText;
 
 }

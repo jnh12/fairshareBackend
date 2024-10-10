@@ -13,10 +13,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @NoArgsConstructor
 @Document(collection = "ocrImages")
 public class OCRImage {
-
     @Id
     private String id;
+    private String deviceUUID;
     private byte[] imageData;
-
-
 }

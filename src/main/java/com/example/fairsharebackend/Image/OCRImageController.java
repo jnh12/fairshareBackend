@@ -3,6 +3,7 @@ package com.example.fairsharebackend.Image;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Base64;
 import java.util.Optional;
 
 @RestController
@@ -12,10 +13,12 @@ public class OCRImageController {
     @Autowired
     private OCRImageService ocrImageService;
 
+
     @PostMapping("/saveImage")
-    public OCRImage saveOCRImage(@RequestBody byte[] resultImage) {
-        return ocrImageService.saveOCRImage(resultImage);
+    public OCRImage saveOCRImage(@RequestBody OCRImageRequest request) {
+        return ocrImageService.saveOCRImage(request.getDeviceUUID(), request.getImageData());
     }
+
 
     @GetMapping("/getImage/{id}")
     public Optional<OCRImage> getOCRImage(@PathVariable String id) {

@@ -67,14 +67,16 @@ public class GPTService {
         return jsonResponse.get("choices").get(0).get("message").get("content").asText();
     }
 
-    public void saveChatGPTResponse(String response) {
+    public void saveChatGPTResponse(String response, String deviceUUID) {
         try {
             GPTResponse gptResponse = objectMapper.readValue(response, GPTResponse.class);
-            gptRepository.save(gptResponse);
+            gptResponse.setDeviceUUID(deviceUUID); // Set the UUID
+            gptRepository.save(gptResponse); // Save the response with UUID
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
+
 
 
 }

@@ -9,11 +9,12 @@ import java.util.Optional;
 public class OCRImageService {
 
     @Autowired
-    private OCRImageRepository ocrImageRepository;  // Corrected to match repository name
+    private OCRImageRepository ocrImageRepository;
 
-    public OCRImage saveOCRImage(byte[] resultImage) {
+    public OCRImage saveOCRImage(String deviceUUID, byte[] resultImage) {
         OCRImage ocrImage = new OCRImage();
-        ocrImage.setImageData(resultImage);  // Set the image data
+        ocrImage.setDeviceUUID(deviceUUID);
+        ocrImage.setImageData(resultImage);
         return ocrImageRepository.save(ocrImage);
     }
 
