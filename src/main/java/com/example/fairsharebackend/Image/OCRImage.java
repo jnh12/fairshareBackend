@@ -15,6 +15,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class OCRImage {
     @Id
     private String id;
+    private String fsId;
     private String deviceUUID;
     private byte[] imageData;
 }

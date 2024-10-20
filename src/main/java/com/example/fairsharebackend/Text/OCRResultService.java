@@ -2,8 +2,6 @@ package com.example.fairsharebackend.Text;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class OCRResultService {
 
@@ -14,10 +12,11 @@ public class OCRResultService {
         OCRResult ocrResult = new OCRResult();
         ocrResult.setResultText(resultText);
         ocrResult.setDeviceUUID(deviceUUID);
+
+        long count = ocrResultRepository.countByDeviceUUID(deviceUUID);
+        ocrResult.setFsId(String.valueOf(count + 1));
+
         return ocrResultRepository.save(ocrResult);
     }
-
-    public Optional<OCRResult> getOCRResult(String id) {
-        return ocrResultRepository.findById(id);
-    }
 }
+

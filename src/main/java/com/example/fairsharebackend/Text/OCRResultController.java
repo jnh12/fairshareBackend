@@ -25,11 +25,6 @@ public class OCRResultController {
         return ocrResultService.saveOCRResult(request.getDeviceUUID(), request.getResultText());
     }
 
-    @GetMapping("/getText/{id}")
-    public Optional<OCRResult> getOCRResult(@PathVariable String id) {
-        return ocrResultService.getOCRResult(id);
-    }
-
     @PostMapping("/parseText")
     public String parseOCRText(@RequestBody GPTResponseRequest request) throws Exception {
         String resultText = request.getResultText();

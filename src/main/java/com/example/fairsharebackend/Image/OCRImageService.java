@@ -15,12 +15,11 @@ public class OCRImageService {
         OCRImage ocrImage = new OCRImage();
         ocrImage.setDeviceUUID(deviceUUID);
         ocrImage.setImageData(resultImage);
+
+        long count = ocrImageRepository.countByDeviceUUID(deviceUUID);
+        ocrImage.setFsId(String.valueOf(count + 1));
+
         return ocrImageRepository.save(ocrImage);
     }
-
-    public Optional<OCRImage> getOCRImage(String id){
-        return ocrImageRepository.findById(id);
-    }
-
 
 }

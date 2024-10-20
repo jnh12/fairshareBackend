@@ -1,5 +1,6 @@
 package com.example.fairsharebackend.GPT;
 
+import com.example.fairsharebackend.Image.OCRImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -70,8 +71,12 @@ public class GPTService {
     public void saveChatGPTResponse(String response, String deviceUUID) {
         try {
             GPTResponse gptResponse = objectMapper.readValue(response, GPTResponse.class);
-            gptResponse.setDeviceUUID(deviceUUID); // Set the UUID
-            gptRepository.save(gptResponse); // Save the response with UUID
+            gptResponse.setDeviceUUID(deviceUUID);
+            gptRepository.save(gptResponse);
+
+            long count = gptRepository.countByDeviceUUID(deviceUUID);
+            gptResponse.setFsId(String.valueOf(count));
+
         } catch (Exception e) {
             e.printStackTrace();
         }

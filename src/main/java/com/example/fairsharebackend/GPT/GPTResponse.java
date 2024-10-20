@@ -18,6 +18,7 @@ public class GPTResponse {
     @Id
     private String id; // Use String for MongoDB ObjectId or auto-generated string
     private String deviceUUID;
+    private String fsId;
     private Store store;
     private TransactionDetails transaction;
     private List<Item> items;

@@ -19,11 +19,4 @@ public class OCRImageController {
         return ocrImageService.saveOCRImage(request.getDeviceUUID(), request.getImageData());
     }
 
-
-    @GetMapping("/getImage/{id}")
-    public Optional<OCRImage> getOCRImage(@PathVariable String id) {
-        return ocrImageService.getOCRImage(id);
-    }
-
-
 }
