@@ -1,5 +1,6 @@
 package com.example.fairsharebackend.Text;
 
+import com.example.fairsharebackend.GPT.GPTResponse;
 import com.example.fairsharebackend.GPT.GPTResponseRequest;
 import com.example.fairsharebackend.GPT.GPTService;
 import com.example.fairsharebackend.Image.OCRImage;
@@ -50,22 +51,20 @@ public class OCRResultController {
     public ParsedAndImageRequest getParsedTextAndImage(@RequestBody String deviceUUID) {
         ParsedAndImageRequest parsedAndImageRequest = new ParsedAndImageRequest();
 
-        Optional<OCRResult> ocrResultOptional = ocrResultService.findLatestOCRResultByDeviceUUID(deviceUUID);
-        Optional<OCRImage> ocrImageOptional = ocrImageService.findLatestOCRResultByDeviceUUID(deviceUUID);
+        Optional<GPTResponse> GPTResponceOptional = gptService.findLatestGPTResponseByDeviceUUID(deviceUUID);
+        Optional<OCRImage> ocrImageOptional = ocrImageService.findLatestOCRImageByDeviceUUID(deviceUUID);
 
-        if (ocrResultOptional.isPresent() && ocrImageOptional.isPresent()) {
-            OCRResult ocrResult = ocrResultOptional.get();
+        if (GPTResponceOptional.isPresent() && ocrImageOptional.isPresent()) {
+            GPTResponse gptResponse = GPTResponceOptional.get();
             OCRImage ocrImage = ocrImageOptional.get();
 
-            parsedAndImageRequest.setOrcResult(ocrResult.getResultText());
+            parsedAndImageRequest.setGPTResponse(gptResponse);
             parsedAndImageRequest.setImageData(ocrImage.getImageData());
         } else {
-            if (!ocrResultOptional.isPresent()) {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "OCR Result not found for deviceUUID: " + deviceUUID);
+            if (GPTResponceOptional.isEmpty()) {
+                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "GPT Response not found for deviceUUID: " + deviceUUID);
             }
-            if (!ocrImageOptional.isPresent()) {
-                throw new ResponseStatusException(HttpStatus.NOT_FOUND, "OCR Image not found for deviceUUID: " + deviceUUID);
-            }
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "OCR Image not found for deviceUUID: " + deviceUUID);
         }
 
         return parsedAndImageRequest;

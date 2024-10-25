@@ -8,5 +8,5 @@ import java.util.Optional;
 public interface OCRResultRepository extends MongoRepository<OCRResult, String> {
     long countByDeviceUUID(String deviceUUID);
 
-    Optional<OCRResult> findTopByDeviceUUIDOrderByFsId(String deviceUUID);
+    Optional<OCRResult> findTopByDeviceUUIDOrderByFsIdDesc(String deviceUUID);
 }

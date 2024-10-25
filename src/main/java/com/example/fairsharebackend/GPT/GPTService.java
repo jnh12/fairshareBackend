@@ -25,25 +25,33 @@ public class GPTService {
 
     @Value("${openai.api.key}")
     private String openaiApiKey;
-    private String promptToGPT = "Parse this data into this json format: {\n" +
+    private String promptToGPT = "You are a data parser. I will provide you with unstructured text from a receipt. Your task is to extract and format the relevant information into a structured JSON output. Follow this structure exactly and ensure data accuracy. If a field is not present, use 'null'. Use this format:\n" +
+            "{\n" +
             "  \"store\": {\n" +
-            "    \"name\": \"string\",\n" +
-            "    \"address\": \"string\"\n" +
+            "    \"name\": \"string\", // Name of the store\n" +
+            "    \"address\": \"string\" // Address of the store\n" +
             "  },\n" +
             "  \"transaction\": {\n" +
-            "    \"date\": \"string\",  // ISO 8601 format e.g., \"2024-10-08\"\n" +
-            "    \"total\": \"number\",\n" +
-            "    \"currency\": \"string\",  // ISO 4217 currency code, e.g., \"USD\"\n" +
-            "    \"payment_method\": \"string\"  // e.g., \"Credit Card\", \"Cash\"\n" +
+            "    \"date\": \"string\", // Date in ISO 8601 format e.g., \"2024-10-08\"\n" +
+            "    \"total\": \"number\", // Total amount\n" +
+            "    \"currency\": \"string\", // ISO 4217 currency code, e.g., \"USD\"\n" +
+            "    \"payment_method\": \"string\" // Payment method, e.g., \"Credit Card\", \"Cash\"\n" +
             "  },\n" +
             "  \"items\": [\n" +
             "    {\n" +
-            "      \"name\": \"string\",\n" +
-            "      \"quantity\": \"number\",\n" +
-            "      \"price\": \"number\"\n" +
+            "      \"name\": \"string\", // Name of the item\n" +
+            "      \"quantity\": \"number\", // Quantity of the item\n" +
+            "      \"price\": \"number\" // Price of the item\n" +
             "    }\n" +
             "  ]\n" +
-            "}\n";
+            "}\n" +
+            "Instructions:\n" +
+            "- Extract the store name and address from the text.\n" +
+            "- Extract the transaction date, total amount, currency, and payment method.\n" +
+            "- For each item, extract the name, quantity, and price. Ensure the item details are accurate.\n" +
+            "- Use 'null' where data is missing or not applicable.\n" +
+            "The data might be unordered, so ensure you understand the context before extracting information.";
+
 
     private final String apiUrl = "https://api.openai.com/v1/chat/completions";
     private final RestTemplate restTemplate = new RestTemplate();
@@ -74,10 +82,13 @@ public class GPTService {
         try {
             GPTResponse gptResponse = objectMapper.readValue(response, GPTResponse.class);
             gptResponse.setDeviceUUID(deviceUUID);
-            gptRepository.save(gptResponse);
 
             long count = gptRepository.countByDeviceUUID(deviceUUID);
             gptResponse.setFsId(String.valueOf(count));
+
+            gptRepository.save(gptResponse);
+
+
 
         } catch (Exception e) {
             e.printStackTrace();

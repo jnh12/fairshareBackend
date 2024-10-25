@@ -22,7 +22,7 @@ public class OCRResultService {
     }
 
     public Optional<OCRResult> findLatestOCRResultByDeviceUUID(String deviceUUID) {
-        return ocrResultRepository.findTopByDeviceUUIDOrderByFsId(deviceUUID);
+        return ocrResultRepository.findTopByDeviceUUIDOrderByFsIdDesc(deviceUUID);
     }
 
 }

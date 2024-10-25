@@ -23,8 +23,8 @@ public class OCRImageService {
         return ocrImageRepository.save(ocrImage);
     }
 
-    public Optional<OCRImage> findLatestOCRResultByDeviceUUID(String deviceUUID) {
-        return ocrImageRepository.findTopByDeviceUUIDOrderByFsId(deviceUUID);
+    public Optional<OCRImage> findLatestOCRImageByDeviceUUID(String deviceUUID) {
+        return ocrImageRepository.findTopByDeviceUUIDOrderByFsIdDesc(deviceUUID);
     }
 
 }

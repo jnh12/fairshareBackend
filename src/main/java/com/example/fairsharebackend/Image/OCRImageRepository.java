@@ -7,6 +7,6 @@ import java.util.Optional;
 public interface OCRImageRepository extends MongoRepository<OCRImage, String> {
     long countByDeviceUUID(String deviceUUID);
 
-    Optional<OCRImage> findTopByDeviceUUIDOrderByFsId(String deviceUUID);
+    Optional<OCRImage> findTopByDeviceUUIDOrderByFsIdDesc(String deviceUUID);
 
 }

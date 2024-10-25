@@ -15,6 +15,6 @@ import lombok.Setter;
 public class ParsedAndImageRequest {
 
     private byte[] ImageData;
-    private String orcResult;
+    private GPTResponse GPTResponse;
 
 }
