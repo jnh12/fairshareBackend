@@ -1,5 +1,6 @@
 package com.example.fairsharebackend.Image;
 
+import com.example.fairsharebackend.Text.OCRResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -20,6 +21,10 @@ public class OCRImageService {
         ocrImage.setFsId(String.valueOf(count + 1));
 
         return ocrImageRepository.save(ocrImage);
+    }
+
+    public Optional<OCRImage> findLatestOCRResultByDeviceUUID(String deviceUUID) {
+        return ocrImageRepository.findTopByDeviceUUIDOrderByFsId(deviceUUID);
     }
 
 }

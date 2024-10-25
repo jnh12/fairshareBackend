@@ -1,5 +1,6 @@
 package com.example.fairsharebackend.GPT;
 
+import com.example.fairsharebackend.Image.OCRImage;
 import com.example.fairsharebackend.Image.OCRImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,6 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class GPTService {
@@ -82,6 +84,8 @@ public class GPTService {
         }
     }
 
-
+    public Optional<GPTResponse> findLatestGPTResponseByDeviceUUID(String deviceUUID) {
+        return gptRepository.findTopByDeviceUUIDOrderByFsId(deviceUUID);
+    }
 
 }
