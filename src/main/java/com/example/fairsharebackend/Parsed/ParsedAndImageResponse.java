@@ -1,4 +1,4 @@
-package com.example.fairsharebackend.Text;
+package com.example.fairsharebackend.Parsed;
 
 
 import com.example.fairsharebackend.GPT.GPTResponse;
@@ -12,7 +12,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 
-public class ParsedAndImageRequest {
+public class ParsedAndImageResponse {
 
     private byte[] ImageData;
     private GPTResponse GPTResponse;
