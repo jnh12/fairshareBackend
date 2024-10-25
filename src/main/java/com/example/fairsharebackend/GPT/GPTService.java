@@ -1,7 +1,5 @@
 package com.example.fairsharebackend.GPT;
 
-import com.example.fairsharebackend.Image.OCRImage;
-import com.example.fairsharebackend.Image.OCRImageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
