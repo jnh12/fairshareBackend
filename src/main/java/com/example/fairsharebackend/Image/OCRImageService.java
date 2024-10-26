@@ -1,9 +1,11 @@
 package com.example.fairsharebackend.Image;
 
+import com.example.fairsharebackend.GPT.GPTResponse;
 import com.example.fairsharebackend.Text.OCRResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -25,6 +27,10 @@ public class OCRImageService {
 
     public Optional<OCRImage> findLatestOCRImageByDeviceUUID(String deviceUUID) {
         return ocrImageRepository.findTopByDeviceUUIDOrderByFsIdDesc(deviceUUID);
+    }
+
+    public Optional<OCRImage> findByFsId(String fsId) {
+        return ocrImageRepository.findByFsId(fsId);
     }
 
 }

@@ -10,15 +10,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/ocr")
 public class ParsedTextController {
 
-
-    @Autowired
-    private com.example.fairsharebackend.GPT.GPTService GPTService;
 
     @Autowired
     private GPTService gptService;
@@ -32,7 +31,7 @@ public class ParsedTextController {
         String deviceUUID = request.getDeviceUUID();
 
         // Call the ChatGPT service with the OCR text
-        String response = GPTService.getChatGPTResponse(resultText);
+        String response = gptService.getChatGPTResponse(resultText);
 
         // Save the response along with the UUID
         gptService.saveChatGPTResponse(response, deviceUUID);
@@ -61,5 +60,25 @@ public class ParsedTextController {
         }
 
         return parsedAndImageResponse;
+    }
+
+    @GetMapping("/getAllRecents")
+    public List<ParsedAndImageResponse> getAllRecents(@RequestBody String deviceUUID) {
+
+        List<ParsedAndImageResponse> parsedAndImageResponses = new ArrayList<>();
+
+        for(int i = 1; i <= gptService.findCountByDeviceUUID(deviceUUID); i++){
+            ParsedAndImageResponse parsedAndImageResponse = new ParsedAndImageResponse();
+            Optional<GPTResponse> gptResponseOptional = gptService.findByFsId(String.valueOf(i));
+            Optional<OCRImage> ocrImageOptional = ocrImageService.findByFsId(String.valueOf(i));
+
+            parsedAndImageResponse.setGPTResponse(gptResponseOptional.get());
+            parsedAndImageResponse.setImageData(ocrImageOptional.get().getImageData());
+
+            parsedAndImageResponses.add(parsedAndImageResponse);
+        }
+
+        return parsedAndImageResponses;
+
     }
 }

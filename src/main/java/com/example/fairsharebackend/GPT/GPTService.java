@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
@@ -96,5 +97,14 @@ public class GPTService {
     public Optional<GPTResponse> findLatestGPTResponseByDeviceUUID(String deviceUUID) {
         return gptRepository.findTopByDeviceUUIDOrderByFsId(deviceUUID);
     }
+
+    public Optional<GPTResponse> findByFsId(String id) {
+        return gptRepository.findByFsId(id);
+    }
+
+    public long findCountByDeviceUUID(String deviceUUID){
+        return  gptRepository.countByDeviceUUID(deviceUUID);
+    }
+
 
 }
